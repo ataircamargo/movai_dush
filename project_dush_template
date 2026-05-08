@@ -1,0 +1,150 @@
+# Enable deployment features. 
+deployment_mode: False
+# Ip of the manager
+manager_ip: "1.1.1.1"
+# Configuration Files used in this project for this type of robot
+configurations:
+    smart:                          'SMART'
+    risk_prev:                      'dush_risk_prevention'
+    msu:                            'tugbot2_msu'
+    msu_scan_while_moving:          'scan_while_moving_template'
+    msu_traffic_warden:             'traffic_warden_template'
+    navigation:                     'dush_movai_navigation'
+    navigation_default_annotation:  'tugbot2_default_navigation'
+    localization:                   'dush_localization'
+    obstacle_detection:             'tugbot2_obstacle_detection'
+    payload_config:                 'payload_config'
+    
+robot_setup:
+    # Mode to launch the robot
+    # - 'robot' : physical robot
+    # - 'fleet_sim' : fleet simulation 
+    launch_mode: "robot"
+    
+    # localization_mode to launch the robot
+    # - '3D' : uses 3D localization
+    # - 'fleet_sim' : used for fleet simulation
+    localization_mode: "3D"
+
+# graphic scene to be used for the project
+scene: teste
+# map configuration to be used for the project (scene editor can be used to see available maps) 
+map: new_map_testing_area
+# map name to save when using mapping flow
+mapping: new_map_testing_area2 #new_map_full_facility2
+# april tags related to front camera
+camera_front:
+    standalone_tags:
+        [
+            {"id":120,"size":0.24},    # Example recovery tag
+            {"id":271,"size":0.12},    # Example dock tag
+            {"id":465,"size":0.048},   # FROM CALIB TARGET. DON'T REMOVE
+            {"id":471,"size":0.048},   # FROM CALIB TARGET. DON'T REMOVE
+            {"id":473,"size":0.048},   # FROM CALIB TARGET. DON'T REMOVE
+            {"id":475,"size":0.048},   # FROM CALIB TARGET. DON'T REMOVE
+            {"id":477,"size":0.048},   # FROM CALIB TARGET. DON'T REMOVE
+            {"id":480,"size":0.048},   # FROM CALIB TARGET. DON'T REMOVE
+       ]
+# april tags related to back camera
+camera_back:
+    standalone_tags:
+        [
+            {"id":351,"size": 0.072}, # Example cart tag
+        ]
+# april tag used for localization.
+apriltags_localization:
+    # id followed by the distance of the robot from the tag at which the localization is activated
+    distance:
+        [
+            120, 2.5,
+            271, 2.5,
+        ]
+    # id followed by the location of the tag in the map
+    static_transforms:
+        [
+            {"id": 120, "t": [-11.512, 1.001, 0.595, 0.725, -0.000, 0.001, 0.689] },
+            {"id": 271, "t": [-41.522, 4.423, 0.435, 0.725, -0.000, 0.001, 0.689] }, # Example tags
+        ]
+    # location using multiple tags, the position is of the point in the middle between the two tag ids mentioned
+    tag_pairs:
+        [
+        ]
+# docking parameters
+dock:
+    # number of tags on each dock
+    number_of_tags: 1
+    # docking procedure happens in two movements, first and second step distance from the apriltag is distance_correct and distance_final
+    distance_correct: 1.0   #tb2 1.0
+    distance_final: 0.758   #tb2 0.835 (left dock) tb2 0.758 (right dock) tugbot1:0.40
+# apriltag ids used for recovery
+recovery_tags: [120, 271]
+# apriltags to use in apriltags_to_bool node
+apriltags_to_bool:
+    tags: []
+# cart-gripper alignment functionality parameters
+align:
+    detection_type: gentag # cart_detector
+    # expected apriltag ids on the carts, when using gen_tag as the goal in the goto node
+    expected_tags: [351]
+    # number of tags on each cart
+    number_of_tags: 1
+    # distance at which the robot will start to move back in a straight line to
+    distance: 0.05
+    # manual shift of the apriltag to left or right, this is manual tuning to get the robot align to the cart well if robot shows fixed shifts (left/right) in many trials
+    shift: 0.0
+    # once aligned robot moves back untill  in a straigt line untill the sensors detect the cart or maximum move_distance_to_car distance with final_speed
+    move_distance_to_car: 0.15   #tb2 0.25
+    final_speed: 0.035 #tb2 0.035
+    max_vel_lin: 0.3
+# movement for entering rails (navigation stack)
+move_in_rails:
+    # distance in meters in -x from the baselink to start medium movement
+    dist_to_med: 1.0
+    # distance in meters in -x from the baselink to start slow movement
+    dist_to_slow: 0.8
+    # distance in meters in -x from baselink to ignore points (distance to gripper end)
+    dist_to_ignore: 0.3
+    # maximum velocity in m/s during the whole movement
+    vel_max: 0.2
+    # maximum velocity in m/s during the medium movement
+    vel_med: 0.1
+    # maximum velocity in m/s during the slow movement
+    vel_slow: 0.03
+    # distance between the rails in meters
+    rails_width: 0.7
+    # maximum distance in meters to move back before returning failed
+    max_dist: 1.8
+# movement for exiting rails (navigation stack)
+move_out_rails:
+    # width of the agv in meters, to ignore as being rails
+    agv_width: 0.55
+    # maximum distance moving forward in meters before assuming we are out of the rails
+    max_dist_rails: 3.0
+    # velocity to move forward in m/s while still in the rails, front laser detects points on the sides
+    vel_in_rails: 0.15
+    # velocity to move forward in m/s once outside the rails, no front laser points on the sides
+    vel_out_rails: 0.3
+    # distance in meters to move once laser detects we are outside the rails, to ensure we dont turn while the cart is in the rails
+    move_dist: 1.45
+    # length in meters in +x of the area to check for points, while determining if we have left the rails
+    check_area_length: 0.5
+check_calibration_conditions:
+    # daily work schedule of the robot. 0 represents monday
+    work_schedule:
+        {
+            0:{'start':'09:00', 'end':'10:00'},
+            1:{'start':'09:00', 'end':'10:00'},
+            2:{'start':'09:00', 'end':'10:00'},
+            3:{'start':'09:00', 'end':'10:00'},
+            4:{'start':'09:00', 'end':'10:00'},
+            5:{'start':'09:00', 'end':'10:00'},
+            6:{'start':'09:00', 'end':'10:00'}
+        }
+# type of the gripper used, selections are based on the grippers configuration
+gripper_type: zalando
+# type of the cart used, selections are based on the cart_detector configuration
+cart_type: zalando
+# enable/disable the task manager functionality, only enable this if you have the task manager application installed
+use_task_manager: True
+# name of the mov.ai instanace in the manager pc
+manager_name: 'robot'

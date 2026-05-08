@@ -1,0 +1,110 @@
+default:
+    active_sources:
+        - "imu"
+        - "odom_wheels"
+        - "amcl_pose"
+        - "aptags_front_pose"
+        - "aptags_back_pose"
+    3d_mapping:
+        undistortion: 0
+        occupancy_min_z: -0.2
+        occupancy_max_z: 1.5
+        resolution: 0.1
+    3d_localization:
+        undistortion: 0
+    ekf_odom:
+        # The order of the boolean values are 
+        # position     : X,Y,Z,
+        # angles       : roll,pitch,yaw,
+        # velocities   : X,Y,Z,
+        # velocities   : roll,pitch,yaw,
+        # accelerations: X,Y,Z. 
+        imu0_config:  [
+            False,False,False,
+            False,False,False,
+            False,False,False,
+            False,False,False,
+            False,False,False
+        ]
+        odom0_config: [
+            False,False,False,
+            False,False,False,
+            True,True,False,
+            False,False,True,
+            False,False,False
+        ]
+        odom1_config: [
+            True, True, False,
+            False, False, True,
+            False, False, False,
+            False, False, False,
+            False, False, False
+        ]
+
+    ekf_relative:
+        # The order of the boolean values are 
+        # position     : X,Y,Z,
+        # angles       : roll,pitch,yaw,
+        # velocities   : X,Y,Z,
+        # velocities   : roll,pitch,yaw,
+        # accelerations: X,Y,Z. 
+        imu0_config:  [
+            False,False,False,
+            False,False,False,
+            False,False,False,
+            False,False,False,
+            False,False,False
+        ]
+        odom0_config: [
+            False,False,False,
+            False,False,False,
+            True,True,False,
+            False,False,True,
+            False,False,False
+        ]
+        odom1_config: null
+
+aptags_front:
+    active_sources:
+        - "imu"
+        - "odom_wheels"
+        - "amcl_pose"
+        - "aptags_front_pose"
+
+align:
+    active_sources:
+        - "imu"
+        - "odom_wheels"
+        - "amcl_pose"
+        - "aptags_back_pose"
+
+odom:
+    active_sources:
+        - "imu"
+        - "odom_wheels"
+
+
+example_change_params:
+    active_sources:
+        - "imu"
+        - "odom_wheels"
+        - "amcl_pose"
+        - "aptags_front_pose"
+    amcl:
+        laser_max_range: 80
+        laser_max_beams: 40
+
+keypoints:
+    intensity_edges: True
+    
+Alerts:
+    lost_localization:
+        info: "localization stack entered in lost state"
+        action: "guide the robot to a recovery tag"
+        callback: ""
+        enable: true
+    init_failure:
+        info: "localization stack initialization failure"
+        action: "make sure that map files are available"
+        callback: ""
+        enable: true

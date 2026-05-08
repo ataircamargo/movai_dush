@@ -1,0 +1,49 @@
+# Camera Information
+camera_front:
+  tf_prefix: camera_front
+  serial_no: '"341222300811"'
+camera_back:
+  tf_prefix: camera_back
+  serial_no: '"339522300725"'
+camera_right:
+  tf_prefix: camera_right
+  serial_no: '"339522300622"'  
+camera_left:
+  tf_prefix: camera_left
+  serial_no: '"339522300080"'
+
+# Dock configuration
+dock:
+    expected_tags: [271]
+    # Manual shift of the apriltag to left or right,
+    # This is manual tuning to get the robot docked well if robot shows fixed shifts (left/right) in many trials.
+    shift: 0.0
+
+states:
+  boot:
+    flow: dush_init
+    services: []
+
+# Switch between lidar models
+# Velodyne: [scan_omni,velodyne]
+# Ouster: [os_sensor,ouster]
+# Robosense: [rslidar,robosense]
+lidar:
+    frame_id: rslidar
+    device_name: robosense
+    crop_volume:
+        min_x: -0.1
+        max_x:  0.45
+        min_y: -0.25
+        max_y:  0.25
+        min_z:  -0.4
+        max_z:  0.6
+    laserscan_crop:
+        crop_angle: False
+        angle_min: -3.14
+        angle_max: 3.14
+        crop_distance_min: True
+        distance_min: 0.3
+        crop_distance_max: False
+        distance_max: 100.0
+        marker_debug: False

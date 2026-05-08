@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<robot name="dush">
+    <!-- Base Link -->
+    <link name="base_link">
+        <visual>
+            <origin xyz="0 0 0" rpy="0 0 0" />
+            <geometry>
+                <mesh filename="package://tb_factory/meshes/base_link.STL" />
+            </geometry>
+            <material name="">
+                <color rgba="1 1 1 1" />
+            </material>
+        </visual>
+    </link>
+
+    <!-- Front Left Wheel (Diagonal Drive) -->
+    <link name="front_left_wheel">
+        <visual>
+            <origin xyz="0 0 0" rpy="0 0 0" />
+            <geometry>
+                <mesh filename="package://tb_factory/meshes/wheel_left.STL" />
+            </geometry>
+            <material name="">
+                <color rgba="0.3 0.3 0.3 1" />
+            </material>
+        </visual>
+    </link>
+    <joint name="front_left_wheel_joint" type="continuous">
+        <origin xyz="0.5575 0.2325 0.0625" rpy="0 0 0"/>
+        <parent link="base_link"/>
+        <child link="front_left_wheel"/>
+        <axis xyz="0 0 -1"/>
+    </joint>
+
+    <!-- Rear Right Wheel (Diagonal Drive) -->
+    <link name="rear_right_wheel">
+        <visual>
+            <origin xyz="0 0 0" rpy="0 0 0" />
+            <geometry>
+                <mesh filename="package://tb_factory/meshes/wheel_right.STL" />
+            </geometry>
+            <material name="">
+                <color rgba="0.3 0.3 0.3 1" />
+            </material>
+        </visual>
+    </link>
+    <joint name="rear_right_joint" type="continuous">
+        <origin xyz="-0.5575 -0.2325 0.0625" rpy="0 0 0"/>
+        <parent link="base_link"/>
+        <child link="rear_right_wheel"/>
+        <axis xyz="0 0 1"/>
+    </joint>
+
+    <!-- 3D LiDAR (Lidar_1) -->
+    <link name="scan_lslidar">
+        <visual>
+            <origin xyz="0 0 -0.039" rpy="1.57079632679 0 -3.14159265359" />
+            <geometry>
+                <mesh filename="package://tb_factory/meshes/lidar_3d.STL" />
+            </geometry>
+            <material name="">
+                <color rgba="0 1 1 1" />
+            </material>
+        </visual>
+    </link>
+    <joint name="scan_lslidar" type="fixed">
+        <origin xyz="0.75 0.0 0.045" rpy="0 0 3.14159265359"/>
+        <parent link="base_link"/>
+        <child link="scan_lslidar"/>
+        <axis xyz="0 0 0"/>
+    </joint>
+
+    <!-- SICK Safety Scanner (Lidar_2) - Rear Left -->
+    <link name="lidar_2">
+        <visual>
+            <origin xyz="0 0 -0.004" rpy="1.5708 0 1.5708"/>
+            <geometry>
+                <mesh filename="package://tb_factory/meshes/lidar_front.STL" />
+            </geometry>
+            <material name="">
+                <color rgba="0 1 1 1" />
+            </material>
+        </visual>
+    </link>
+    <joint name="lidar_2_joint" type="fixed">
+        <origin xyz="-0.75 0.30 0.31" rpy="3.1415 0 2.35"/>
+        <!--origin xyz="-0.75 0.30 0.31" rpy="0 0 -0.7"/-->
+        <parent link="base_link"/>
+        <child link="lidar_2"/>
+        <axis xyz="0 0 0"/>
+    </joint>
+
+    <!-- SICK Safety Scanner (Lidar_3) - Front Right -->
+    <link name="lidar_3">
+        <visual>
+            <origin xyz="0 0 -0.004" rpy="1.5708 0 1.5708" />
+            <geometry>
+                <mesh filename="package://tb_factory/meshes/lidar_front.STL" />
+            </geometry>
+            <material name="">
+                <color rgba="0 1 1 1" />
+            </material>
+        </visual>
+    </link>
+    <joint name="lidar_3_joint" type="fixed">
+        <origin xyz="0.75 -0.30 0.31" rpy="3.1415 0 -0.85"/>
+        <parent link="base_link"/>
+        <child link="lidar_3"/>
+        <axis xyz="0 0 0"/>
+    </joint>
+
+    <!-- IMU frame -->
+    <link name="imu_frame"/>
+    <joint name="imu_link" type="fixed">
+        <origin xyz="0.14 0.02 0.25" rpy="0 0 -1.57"/>
+        <parent link="base_link"/>
+        <child link="imu_frame"/>
+        <axis xyz="0 0 0"/>
+    </joint>
+    
+    <!-- Cameras -->
+
+    <link name="camera_front_link"/>
+    <joint name="camera_front_link" type="fixed">
+        <origin rpy="0 0 0" xyz="0.5575 0 0.2"/>
+        <parent link="base_link"/>
+        <child link="camera_front_link"/>
+    </joint>
+    
+    <link name="camera_back_link"/>
+    <joint name="camera_back_link" type="fixed">
+        <origin rpy="0 0 3.1416" xyz="-0.5575 0 0.2"/>
+        <parent link="base_link"/>
+        <child link="camera_back_link"/>
+    </joint>
+    
+    <link name="camera_left_link"/>
+    <joint name="camera_left_link" type="fixed">
+        <origin rpy="0 0.25 1.57" xyz="0 0 0.2"/>
+        <parent link="base_link"/>
+        <child link="camera_left_link"/>
+    </joint>
+    
+    <link name="camera_right_link"/>
+    <joint name="camera_right_link" type="fixed">
+        <origin rpy="0 0.25 -1.57" xyz="0 0 0.2"/>
+        <parent link="base_link"/>
+        <child link="camera_right_link"/>
+    </joint>
+
+
+</robot>

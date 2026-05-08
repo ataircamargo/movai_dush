@@ -1,0 +1,42 @@
+dock:
+    move_base:
+        TebLocalPlannerROS:
+            max_vel_x: 0.1
+            max_vel_theta: 0.02
+            global_plan_viapoint_sep: 0.1
+            max_global_plan_lookahead_dist: 2.00
+            weight_viapoint: 10
+            yaw_goal_tolerance: 0.04
+            weight_optimaltime: 1
+            weight_shortest_path: 1000
+            weight_kinematics_nh: 1000
+            max_vel_y: 0.2
+            acc_lim_y: 0.2
+            # This parameter accounts for the inertia of the robot.
+            # More the inertia, the bigger this value needs to be,
+            # to stop it on top of the goal.
+            xy_goal_tolerance: 0.2
+
+dock_backwards:
+    move_base:
+        TebLocalPlannerROS:
+            allow_init_with_backwards_motion: true
+            global_plan_overwrite_orientation: false 
+            weight_kinematics_forward_drive: 0
+            max_vel_x: 0.04
+            max_vel_x_backwards: 0.1
+            max_vel_theta: 0.02
+            global_plan_viapoint_sep: 0.05
+            max_global_plan_lookahead_dist: 2.00
+            weight_viapoint: 100
+            yaw_goal_tolerance: 0.04
+            weight_optimaltime: 1
+            weight_shortest_path: 1000
+            weight_kinematics_nh: 1000
+            max_vel_y: 0.2
+            acc_lim_y: 0.2
+            # This parameter accounts for the inertia of the robot.
+            # More the inertia, the bigger this value needs to be,
+            # to stop it on top of the goal.
+            xy_goal_tolerance: 0.05
+
